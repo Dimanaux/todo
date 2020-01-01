@@ -17,3 +17,9 @@ Content-Type: application/json
 Authorization: {{jwt}}
 
 ###
+# Delete my account
+
+DELETE {{root}}/users/my
+Authorization: {{jwt}}
+
+###
