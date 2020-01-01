@@ -9,9 +9,9 @@ module Api
       result = Users::Authenticate.call(params)
 
       if result.success?
-        render(json: result.to_h.slice(:jwt))
+        render json: result.to_h.slice(:jwt)
       else
-        render(json: result.to_h.slice(:error), status: :bad_request)
+        render json: result.to_h.slice(:error), status: :unprocessable_entity
       end
     end
 
