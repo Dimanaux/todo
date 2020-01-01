@@ -2,25 +2,32 @@
 
 module Users
   # Creates user
-  class Create
+  class Create < ModelInteractor
     include Interactor
 
-    before :fail_if_email_taken
-
     def call
-      context.user = User.create!(
+      context.user = User.create(
         email: context.email,
         password: context.password,
         password_confirmation: context.password
       )
     end
 
+    def record
+      context.user
+    end
+
+    after :create_default_todo_list
+    after :fail_on_record_error
+
     private
 
-    def fail_if_email_taken
-      return unless User.exists?(email: context.email)
-
-      context.fail!(error: I18n.t('errors.messages.email.taken'))
+    def create_default_todo_list
+      TodoLists::Create.call(
+        title: 'Default',
+        description: 'The default todo list.',
+        user: context.user
+      )
     end
   end
 end
