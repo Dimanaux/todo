@@ -14,3 +14,8 @@ en:
         invalid: 'Wrong email or password!'
       token:
         invalid: 'Invalid token!'
+  pundit:
+    default: 'You cannot perform this action.'
+    todo_list_policy:
+      show?: 'You cannot view this todo list!'
+      update?: 'You cannot edit this todo list!'
