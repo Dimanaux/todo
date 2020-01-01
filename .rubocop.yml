@@ -18,3 +18,7 @@ Style/Documentation:
   Exclude:
     - 'config/application.rb'
     - 'db/migrate/*.rb'
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'db/migrate/*.rb'
