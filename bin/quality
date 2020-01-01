@@ -2,4 +2,3 @@
 
 bundle exec rubocop
 bundle exec fasterer
-bundle exec rails_best_practices

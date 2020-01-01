@@ -1,0 +1,25 @@
+###
+# Register an account
+
+POST {{root}}/users
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+# Show my account
+
+GET {{root}}/users/my
+Content-Type: application/json
+Authorization: {{jwt}}
+
+###
+# Delete my account
+
+DELETE {{root}}/users/my
+Authorization: {{jwt}}
+
+###

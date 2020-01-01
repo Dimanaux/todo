@@ -1,0 +1,12 @@
+###
+# Authenticate (get token)
+
+POST {{root}}/authentication
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
