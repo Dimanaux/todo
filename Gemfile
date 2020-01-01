@@ -9,10 +9,12 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 # gem 'jbuilder', '~> 2.7'
+
 gem 'bcrypt', '~> 3.1.7'
 gem 'decent_exposure'
 gem 'interactor'
 gem 'jwt'
+gem 'pundit'
 
 gem 'rack-cors'
 
@@ -34,6 +36,7 @@ end
 group :test do
   gem 'capybara'
   gem 'factory_bot_rails'
+  gem 'ffaker'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'simplecov'
