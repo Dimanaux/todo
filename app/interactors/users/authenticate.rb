@@ -8,7 +8,8 @@ module Users
     before :authenticate
 
     def call
-      context.jwt = Jwt.encode(id: @user.id, email: @user.email)
+      token = Jwt.encode(id: @user.id, email: @user.email)
+      context.token = context.jwt = token
     end
 
     private
