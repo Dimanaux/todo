@@ -1,0 +1,42 @@
+###
+# All lists
+
+GET {{root}}/todo_lists
+Authorization: {{jwt}}
+
+###
+# Single list
+
+GET {{root}}/todo_lists/7
+Authorization: {{jwt}}
+
+###
+# Create a new list
+
+POST {{root}}/todo_lists
+Content-Type: application/json
+Authorization: {{jwt}}
+
+{
+  "title": "Test my rails application",
+  "description": "optional"
+}
+
+###
+# Update list
+
+PUT {{root}}/todo_lists/7
+Content-Type: application/json
+Authorization: {{jwt}}
+
+{
+  "description": "Description is optional!."
+}
+
+###
+# Delete a list
+
+DELETE {{root}}/todo_lists/8
+Authorization: {{jwt}}
+
+###
