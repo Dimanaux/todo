@@ -5,5 +5,6 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     get '/users/my', to: 'users#show'
     resources :authentication, only: [:create]
+    resources :todo_lists
   end
 end
