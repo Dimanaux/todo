@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_30_214052) do
+ActiveRecord::Schema.define(version: 2020_01_02_095229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "repeats", force: :cascade do |t|
+    t.datetime "datetime"
+    t.bigint "todo_item_id", null: false
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["todo_item_id"], name: "index_repeats_on_todo_item_id"
+  end
+
+  create_table "todo_items", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description", default: "", null: false
+    t.bigint "user_id", null: false
+    t.bigint "todo_list_id", null: false
+    t.integer "priority", default: 0
+    t.datetime "repeat_from"
+    t.datetime "repeat_to"
+    t.integer "repeat_type", default: 0
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["todo_list_id"], name: "index_todo_items_on_todo_list_id"
+    t.index ["user_id"], name: "index_todo_items_on_user_id"
+  end
 
   create_table "todo_lists", force: :cascade do |t|
     t.string "title"
@@ -32,5 +57,8 @@ ActiveRecord::Schema.define(version: 2019_12_30_214052) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "repeats", "todo_items"
+  add_foreign_key "todo_items", "todo_lists"
+  add_foreign_key "todo_items", "users"
   add_foreign_key "todo_lists", "users"
 end
