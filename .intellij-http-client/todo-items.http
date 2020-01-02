@@ -1,0 +1,58 @@
+###
+# Show all todos from a list
+
+GET {{root}}/todo_lists/7/todo_items
+Content-Type: application/json
+Authorization: {{jwt}}
+
+###
+# Show particular todo item
+
+GET {{root}}/todo_items/1
+Content-Type: application/json
+Authorization: {{jwt}}
+
+###
+# Create a todo item
+# title:text
+# description:text is optional and empty by default
+# status {new, done, failed} is new by default
+# repeat_type {once, daily, weekly, monthly, annually} is once by default
+# priority {low, medium, high} is medium by default
+# user is taken from jwt
+# todo list is taken from url
+# repeat_from:datetime
+# repeat_to:datetime
+
+POST {{root}}/todo_lists/7/todo_items
+Content-Type: application/json
+Authorization: {{jwt}}
+
+{
+  "title": "Pour flowers",
+  "repeat_type": "weekly",
+  "repeat_from": "2020-01-01",
+  "repeat_to": "2023-01-01",
+  "priority": "high"
+}
+
+###
+# Update a todo item
+# PATCH/PUT availiable
+
+PATCH {{root}}/todo_items/1
+Content-Type: application/json
+Authorization: {{jwt}}
+
+{
+  "description": "Take water from bathroom"
+}
+
+###
+# Delete a todo
+
+DELETE {{root}}/todo_items/1
+Content-Type: application/json
+Authorization: {{jwt}}
+
+###
