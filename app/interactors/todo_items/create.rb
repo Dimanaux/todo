@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
+require_relative 'todo_items'
+
 module TodoItems
   # Creates todo items
   class Create < ModelInteractor
     include Interactor
 
     def call
-      self.todo_item = TodoItem.create(context.to_h.slice(PERMITTED_ATTRIBUTES))
+      self.todo_item = TodoItem.create(context.to_h.slice(*PERMITTED_PARAMS))
     end
 
     after :create_repeats!

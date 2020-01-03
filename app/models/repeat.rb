@@ -6,5 +6,5 @@ class Repeat < ApplicationRecord
 
   enum status: {
     new: 0, done: 1, failed: 2
-  }
+  }, _prefix: :status
 end

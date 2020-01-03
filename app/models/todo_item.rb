@@ -30,7 +30,7 @@ class TodoItem < ApplicationRecord
   private
 
   def set_datetime_interval
-    self.repeat_from = Time.current
-    self.repeat_to = repeat_from + 1.hour
+    self.repeat_from ||= Time.current
+    self.repeat_to ||= repeat_from + 1.hour
   end
 end

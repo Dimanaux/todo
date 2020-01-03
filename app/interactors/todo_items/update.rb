@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'todo_items'
+
 module TodoItems
   # Updates todo items
   class Create < ModelInteractor
@@ -8,7 +10,7 @@ module TodoItems
     before :update_repeats!
 
     def call
-      todo_item.update!(context.to_h.slice(PERMITTED_ATTRIBUTES))
+      todo_item.update!(context.to_h.slice(*PERMITTED_PARAMS))
     end
 
     after :fail_on_record_error

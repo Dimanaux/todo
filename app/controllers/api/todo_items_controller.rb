@@ -28,7 +28,7 @@ module Api
       if result.success?
         render json: result.todo_item, status: :created
       else
-        render json: result.error, status: :unprocessable_entity
+        render json: result.to_h.slice(:error), status: :unprocessable_entity
       end
     end
 
@@ -56,9 +56,10 @@ module Api
     end
 
     def todo_item_params
-      params.require(:todo_item).permit(
-        :title, :description, :priority, :repeat_from, :repeat_to, :repeat_type, :status
-      )
+      params.permit(%i[
+            title description priority repeat_from repeat_to repeat_type status
+          todo_list_id todo_item
+      ])
     end
   end
 end

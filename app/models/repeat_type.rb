@@ -2,8 +2,6 @@
 
 # Base class for repeat types
 class RepeatType
-  private_class_method :new
-
   attr_reader :repeat_interval
 
   def between(date_from, date_to, &block)

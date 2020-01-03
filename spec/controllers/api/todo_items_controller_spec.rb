@@ -9,9 +9,11 @@ describe Api::TodoItemsController do
 
   include_context 'when authenticated'
 
-  let(:valid_attributes) { attributes_for(:todo_item).merge(user: current_user) }
-  let(:invalid_attributes) { attributes_for(:todo_item).merge(title: '') }
+  let(:some_list) { create(:todo_list) }
+  let(:invalid_attributes) { attributes_for(:todo_item).merge(title: '', todo_list: some_list) }
+
   let(:my_list) { create(:todo_list, user: current_user) }
+  let(:valid_attributes) { attributes_for(:todo_item).merge(user: current_user, todo_list: my_list) }
   let(:my_item) { create(:todo_item, user: current_user, todo_list: my_list) }
 
   describe 'GET #index' do
@@ -70,27 +72,38 @@ describe Api::TodoItemsController do
     end
   end
 
-  describe 'POST #create', skip: true do
+  describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new TodoItem' do
         expect do
-          post :create, params: { todo_item: valid_attributes }
+          post :create, params: { todo_list_id: my_list.id }, body: valid_attributes.to_json, as: :json
         end.to change(TodoItem, :count).by(1)
       end
 
-      it 'renders a JSON response with the new todo_item' do
-        post :create, params: { todo_item: valid_attributes }
+      it 'returns status "created"' do
+        post :create, params: { todo_list_id: my_list.id }, body: valid_attributes.to_json, as: :json
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(todo_item_url(TodoItem.last))
+      end
+
+      it 'renders a JSON response' do
+        post :create, params: { todo_list_id: my_list.id }, body: valid_attributes.to_json, as: :json
+        expect(response.content_type).to include('application/json')
       end
     end
 
     context 'with invalid params' do
-      it 'renders a JSON response with errors for the new todo_item' do
-        post :create, params: { todo_item: invalid_attributes }
+      before { post :create, params: { todo_list_id: my_list.id }, body: invalid_attributes.to_json, as: :json }
+
+      it 'renders a JSON response' do
+        expect(response.content_type).to include('application/json')
+      end
+
+      it 'responses with status "unprocessable entity"' do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+      end
+
+      it 'shows errors' do
+        expect(response_body).to include('error')
       end
     end
   end
