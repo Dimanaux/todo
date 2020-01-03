@@ -4,13 +4,9 @@ require 'rails_helper'
 
 describe Jwt do
   let(:payload) { { 'user_id' => 1 } }
-  let(:token) { 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.nPI-kOveZLkKcjV5pukoOK3I2pKYbYcSeLhomZItJCQ' }
+  let(:token) { described_class.encode(payload) }
 
-  it 'encodes' do
-    expect(described_class.encode(payload)).to eq(token)
-  end
-
-  it 'decodes' do
+  it 'encodes and decodes' do
     expect(described_class.decode(token)).to eq(payload)
   end
 end

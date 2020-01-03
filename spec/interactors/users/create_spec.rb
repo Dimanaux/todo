@@ -21,6 +21,10 @@ describe Users::Create do
       it 'provides the persisted user instance' do
         expect(context.user).to be_persisted
       end
+
+      it 'creates default todo list for new user' do
+        expect(context.user.todo_lists.count).to be(1)
+      end
     end
 
     context 'when given an existing email' do
