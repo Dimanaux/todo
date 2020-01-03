@@ -3,13 +3,13 @@
 require 'rails_helper'
 require 'support/shoulda_matchers'
 
-describe TodoList do
+describe TodoItem do
   context 'with validations' do
     it { is_expected.to validate_presence_of :title }
   end
 
   context 'with associations' do
     it { is_expected.to belong_to :user }
-    it { is_expected.to have_many :todo_items }
+    it { is_expected.to belong_to :todo_list }
   end
 end
