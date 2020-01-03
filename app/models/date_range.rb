@@ -2,7 +2,7 @@
 
 # Range of timestamps, datetime interval
 class DateRange < Range
-  def every(step, &block)
+  def every(step, &_block)
     current_time = self.begin.to_datetime
     end_time = self.end.to_datetime
     less_than = exclude_end? ? :< : :<=

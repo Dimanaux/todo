@@ -13,4 +13,3 @@ FactoryBot.define do
     association :todo_list
   end
 end
-

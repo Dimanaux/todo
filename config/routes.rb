@@ -12,6 +12,5 @@ Rails.application.routes.draw do
       end
     end
     resources :todo_items, only: %i[show update destroy]
-
   end
 end
