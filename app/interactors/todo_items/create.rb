@@ -6,23 +6,24 @@ module TodoItems
     include Interactor
 
     def call
-      @todo_list = TodoItem.create(context.to_h.slice(PERMITTED_ATTRIBUTES))
-      context.todo_list = @todo_list
+      self.todo_item = TodoItem.create(context.to_h.slice(PERMITTED_ATTRIBUTES))
     end
 
     after :create_repeats!
     after :fail_on_record_error
 
     def record
-      @todo_list
+      todo_item
     end
 
     private
 
+    delegate :todo_item, :todo_item=, to: :context
+
     def create_repeats!
-      repeat = RepeatType.of(@todo_list.repeat)
-      repeat.between(@todo_list.repeat_from, @todo_list.repeat_to) do |date|
-        @todo_list.repeats.create(datetime: date, status: :new)
+      repeat = RepeatType.of(todo_item.repeat_type)
+      repeat.between(todo_item.repeat_from, todo_item.repeat_to) do |date|
+        todo_item.repeats.create(datetime: date, status: :new)
       end
     end
   end
