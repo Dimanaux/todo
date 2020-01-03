@@ -3,6 +3,8 @@
 # Todo item, bullet, thing
 class TodoItem < ApplicationRecord
   validates :title, presence: true
+  validates :repeat_from, presence: true
+  validates :repeat_to, presence: true
   validates_with TodoItems::RepeatIntervalValidator
 
   belongs_to :user
