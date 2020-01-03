@@ -21,7 +21,7 @@ class TodoItemPolicy < ApplicationPolicy
   end
 
   def owns?
-    todo_list.user == user
+    todo_item.user == user
   end
 
   def user_present?
