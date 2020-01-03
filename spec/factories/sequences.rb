@@ -8,4 +8,8 @@ FactoryBot.define do
   sequence :password do |n|
     "qwerty#{n}"
   end
+
+  sequence :todo_list_title do |n|
+    "List ##{n}"
+  end
 end
