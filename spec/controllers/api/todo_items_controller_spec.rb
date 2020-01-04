@@ -108,35 +108,41 @@ describe Api::TodoItemsController do
     end
   end
 
-  describe 'PUT #update', skip: true do
+  describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
-      end
+      let(:new_attributes) { valid_attributes.merge(title: "#{valid_attributes[:title]} was updated.") }
 
       it 'updates the requested todo_item' do
-        todo_item = TodoItem.create! valid_attributes
-        put :update, params: { id: todo_item.to_param, todo_item: new_attributes }
+        todo_item = TodoItem.create!(valid_attributes)
+        put :update, params: { id: todo_item.to_param }, body: new_attributes.to_json, as: :json
         todo_item.reload
-        skip('Add assertions for updated state')
+        expect(todo_item.title).to eq(new_attributes[:title])
       end
 
       it 'renders a JSON response with the todo_item' do
-        todo_item = TodoItem.create! valid_attributes
-
-        put :update, params: { id: todo_item.to_param, todo_item: valid_attributes }
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq('application/json')
+        todo_item = TodoItem.create!(valid_attributes)
+        put :update, params: { id: todo_item.to_param }, body: valid_attributes.to_json, as: :json
+        expect(response.content_type).to include('application/json')
       end
     end
 
     context 'with invalid params' do
-      it 'renders a JSON response with errors for the todo_item' do
-        todo_item = TodoItem.create! valid_attributes
-
-        put :update, params: { id: todo_item.to_param, todo_item: invalid_attributes }
+      it 'returns a response with status "unprocessable entity"' do
+        todo_item = TodoItem.create!(valid_attributes)
+        put :update, params: { id: todo_item.to_param }, body: invalid_attributes.to_json, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+      end
+
+      it 'renders a JSON response' do
+        todo_item = TodoItem.create!(valid_attributes)
+        put :update, params: { id: todo_item.to_param }, body: invalid_attributes.to_json, as: :json
+        expect(response.content_type).to include('application/json')
+      end
+
+      it 'returns an error message' do
+        todo_item = TodoItem.create!(valid_attributes)
+        put :update, params: { id: todo_item.to_param }, body: invalid_attributes.to_json, as: :json
+        expect(response_body).to include('error')
       end
     end
   end

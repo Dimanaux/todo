@@ -35,12 +35,12 @@ module Api
     # PATCH/PUT /api/todo_items/1
     def update
       result = TodoItems::Update.call(
-        todo_item_params.merge(todo_list: todo_list, user: current_user, old_item: todo_item)
+        todo_item_params.merge(user: current_user, todo_item: todo_item)
       )
       if result.success?
         render json: result.todo_item
       else
-        render json: result.error, status: :unprocessable_entity
+        render json: result.to_h.slice(:error), status: :unprocessable_entity
       end
     end
 
@@ -56,10 +56,12 @@ module Api
     end
 
     def todo_item_params
-      params.permit(%i[
-            title description priority repeat_from repeat_to repeat_type status
-          todo_list_id todo_item
-      ])
+      params.permit(*PERMITTED_PARAMS)
     end
+
+    PERMITTED_PARAMS = %i[
+      title description priority repeat_from repeat_to repeat_type status
+      todo_list_id todo_item
+    ].freeze
   end
 end

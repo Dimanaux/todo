@@ -12,7 +12,7 @@ class TodoItem < ApplicationRecord
 
   has_many :repeats, dependent: :destroy
 
-  before_create :set_datetime_interval
+  before_validation :set_datetime_interval
 
   enum repeat_type: {
     once: 0, daily: 1, weekly: 2,

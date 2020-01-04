@@ -6,8 +6,6 @@ require 'support/shoulda_matchers'
 describe TodoItem do
   context 'with validations' do
     it { is_expected.to validate_presence_of :title }
-    it { is_expected.to validate_presence_of :repeat_from }
-    it { is_expected.to validate_presence_of :repeat_to }
   end
 
   context 'with associations' do

@@ -4,13 +4,13 @@ require_relative 'todo_items'
 
 module TodoItems
   # Updates todo items
-  class Create < ModelInteractor
+  class Update < ModelInteractor
     include Interactor
 
     before :update_repeats!
 
     def call
-      todo_item.update!(context.to_h.slice(*PERMITTED_PARAMS))
+      todo_item.update(context.to_h.slice(*PERMITTED_PARAMS))
     end
 
     after :fail_on_record_error
@@ -24,7 +24,7 @@ module TodoItems
     delegate :todo_item, to: :context
 
     def update_repeats!
-      return if repeats_same?
+      return unless need_to_update_repeats?
 
       repeat = RepeatType.of(todo_item.repeat_type)
       repeat.between(todo_item.repeat_from, todo_item.repeat_to) do |date|
@@ -32,10 +32,21 @@ module TodoItems
       end
     end
 
-    def repeats_same?
-      (todo_item.repeat_from == context.repeat_from &&
-          todo_item.repeat_to == context.repeat_to &&
-          todo_item.repeat_type == context.repeat_type)
+    def need_to_update_repeats?
+      any_repeat_params? && (repeat_interval_changed? || repeat_type_changed?)
+    end
+
+    def any_repeat_params?
+      context.repeat_from.nil? && context.repeat_to.nil?
+    end
+
+    def repeat_interval_changed?
+      todo_item.repeat_from != context.repeat_from ||
+        todo_item.repeat_to != context.repeat_to
+    end
+
+    def repeat_type_changed?
+      context.repeat_type && context.repeat_type != todo_item.repeat_type
     end
   end
 end
