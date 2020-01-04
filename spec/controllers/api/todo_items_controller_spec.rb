@@ -75,9 +75,9 @@ describe Api::TodoItemsController do
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new TodoItem' do
-        expect do
+        expect {
           post :create, params: { todo_list_id: my_list.id }, body: valid_attributes.to_json, as: :json
-        end.to change(TodoItem, :count).by(1)
+        }.to change(TodoItem, :count).by(1)
       end
 
       it 'returns status "created"' do

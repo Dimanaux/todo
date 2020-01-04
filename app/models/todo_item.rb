@@ -5,7 +5,7 @@ class TodoItem < ApplicationRecord
   validates :title, presence: true
   validates :repeat_from, presence: true
   validates :repeat_to, presence: true
-  validates_with TodoItems::RepeatIntervalValidator
+  validates_with RepeatIntervalValidator
 
   belongs_to :user
   belongs_to :todo_list

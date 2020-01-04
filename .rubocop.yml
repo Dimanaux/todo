@@ -18,6 +18,10 @@ Metrics/MethodLength:
   Exclude:
     - 'db/**/*.rb'
 
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/controllers/**/*.rb'
+
 Style/Documentation:
   Exclude:
     - 'config/application.rb'
