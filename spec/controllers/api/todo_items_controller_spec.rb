@@ -141,12 +141,17 @@ describe Api::TodoItemsController do
     end
   end
 
-  describe 'DELETE #destroy', skip: true do
+  describe 'DELETE #destroy' do
     it 'destroys the requested todo_item' do
-      todo_item = TodoItem.create! valid_attributes
-      expect do
-        delete :destroy, params: { id: todo_item.to_param }
-      end.to change(TodoItem, :count).by(-1)
+      item = TodoItem.create!(valid_attributes)
+      expect { delete :destroy, params: { id: item.to_param } }
+        .to change(TodoItem, :count).by(-1)
+    end
+
+    it 'forbids to destroy other user\'s todo' do
+      some_item = create(:todo_item)
+      delete :destroy, params: { id: some_item.to_param }
+      expect(response_body).to include('error')
     end
   end
 end
