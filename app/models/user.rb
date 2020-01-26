@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   has_many :todo_lists, dependent: :destroy
+  has_many :todo_items, through: :todo_lists
 
   def as_json(options = {})
     super(options.merge(only: %I[id email]))

@@ -14,6 +14,8 @@ en:
         invalid: 'Wrong email or password!'
       token:
         invalid: 'Invalid token!'
+      repeat_interval:
+        invalid: 'Repeat interval is invalid!'
   pundit:
     default: 'You cannot perform this action.'
     todo_list_policy:

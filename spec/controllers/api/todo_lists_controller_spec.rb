@@ -118,9 +118,9 @@ describe Api::TodoListsController do
   describe 'DELETE #destroy' do
     it 'destroys the requested todo_list' do
       todo_list = TodoList.create! valid_attributes
-      expect do
+      expect {
         delete :destroy, params: { id: todo_list.to_param }
-      end.to change(TodoList, :count).by(-1)
+      }.to change(TodoList, :count).by(-1)
     end
   end
 end

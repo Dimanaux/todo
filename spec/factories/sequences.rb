@@ -12,4 +12,8 @@ FactoryBot.define do
   sequence :todo_list_title do |n|
     "List ##{n}"
   end
+
+  sequence :todo_item_title do |n|
+    "Todo ##{n}: Do something."
+  end
 end

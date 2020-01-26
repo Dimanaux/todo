@@ -62,4 +62,13 @@ describe Api::UsersController do
       end
     end
   end
+
+  describe '#destroy' do
+    include_context 'when authenticated'
+
+    it 'deletes user\' account' do
+      expect { delete :destroy }
+        .to change(User, :count).by(-1)
+    end
+  end
 end
