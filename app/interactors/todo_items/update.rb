@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'todo_items'
+require_relative '../todo_items'
 
 module TodoItems
   # Updates todo items
